@@ -1,6 +1,5 @@
+% ob_two_pulse_test_a
 % Tests:    pi/2 pulse, no detuning, Omega_21 >> Gamma_2 (i.e. negligible decay)
-%
-% Author:   T P Ogden <t.p.ogden@durham.ac.uk>
 
 %% Parameters
 
@@ -16,6 +15,8 @@ p.pulse_duration = pulse_in_pi/p.Omega_21/2; % [µs]
 p.init_pop = [1;0]; % initial populations of the states
 
 p.duration = 2*p.pulse_duration; % [µs] duration to be solved
+
+p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
 
 %% Solve for pulse
 

@@ -30,6 +30,8 @@ decay_lifetime = 1/(2*pi*p_in.Gamma_2); % [µs]
 p.pulse_duration = p_in.pulse_duration/decay_lifetime; % [dimless] pulse duration
 duration = p_in.duration/decay_lifetime; % [dimless] total duration
 
+p.gamma_21 = p_in.gamma_21/p_in.Gamma_2; % [dimless] Lorenzian laser linewidth
+
 %% Rabi frequency and detuning as functions of time
 
 p.Omega_21_f = @(t) omega_pulse(t,p.Omega_21,p.pulse_duration); % Rabi frequency, square pulse

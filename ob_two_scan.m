@@ -35,6 +35,8 @@ decay_lifetime = 1/(2*pi*p_in.Gamma_2); % [µs]
 % Pulse duration (dimensionless [µs]/decay_lifetime[µs])
 p.pulse_duration = p_in.scan_duration/decay_lifetime; % Scan duration 
 
+p.gamma_21 = p_in.gamma_21/p_in.Gamma_2; % [dimless] Lorenzian laser linewidth
+
 %% Rabi frequency and detuning functions
 
 % The Rabi frequency is passed in as a function of time. In this case it is

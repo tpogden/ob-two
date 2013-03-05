@@ -19,6 +19,8 @@ p.init_pop = [1;0]; % initial populations of the states
 
 p.duration = 1*p.pulse_duration; % [µs] duration to be solved
 
+p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
+
 %% Solve for pulse
 
 [t,rho] = ob_two_pulse(p);

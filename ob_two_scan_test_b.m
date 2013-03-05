@@ -26,6 +26,8 @@ p.scan_duration = 500;        % scan duration [1e-6 s]
 % ground state.
 p.init_pop = [1;0];
 
+p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
+
 %% Scan and solve
 
 [t,rho] = ob_two_scan(p);

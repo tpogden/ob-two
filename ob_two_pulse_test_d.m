@@ -4,9 +4,9 @@
 %
 % Notes:    8pi pulse, some detuning, some decay
 
-%% System parameters
+clear;
 
-clear all;
+%% System parameters
 
 p.Gamma_2 =  1;  % Decay rate for Rb87 [2pi MHz]
 p.Omega_21 = 100; % Rabi frequency [2pi MHz]
@@ -19,6 +19,8 @@ p.init_pop = [1;0]; % initial populations of the states
 
 p.duration = 1*p.pulse_duration; % [µs] duration to be solved
 
+p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
+
 %% Solve for pulse
 
 [t,rho] = ob_two_pulse(p);
@@ -26,6 +28,8 @@ p.duration = 1*p.pulse_duration; % [µs] duration to be solved
 %% Plots
 
 plot_population_time(t,rho); % plot population of states 1,2 vs time
+
+csvwrite(['csv/' mfilename '_pop.csv'],[t rho(:,1) rho(:,4)]);
 
 % Plot real, imag of susceptibility, i.e. the absorption and dispersion vs time
 d_eg = 2.534e-29; %  [Cm] transition dipole moment 

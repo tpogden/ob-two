@@ -35,15 +35,16 @@ H = [       0    Omega_21;
      Omega_21 -2*Delta_21]/2; % Hamiltonian
 
 %% Decoherence 
- 
-% ADD LASER LINEWIDTH HERE.
+
+% decoherence due to spontaneous emission + Lorenzian laser linewidth 
+Gamma_21 = p.Gamma_2/2 + p.gamma_21;
 
 % Lindblad operator
-lindblad = [          0 p.Gamma_2/2;
-            p.Gamma_2/2           0];
-lindblad = lindblad.*rho;
+lindblad = zeros(2,2);
 lindblad(1,1) = -p.Gamma_2*rho(2,2);
-lindblad(2,2) =  p.Gamma_2*rho(2,2);
+lindblad(1,2) = Gamma_21*rho(1,2);
+lindblad(2,1) = Gamma_21*rho(2,1);
+lindblad(2,2) = p.Gamma_2*rho(2,2);
      
 %% Liouville equation
 ddt_rho = 1i*(rho*H - H*rho) - lindblad;
@@ -51,6 +52,3 @@ ddt_rho = 1i*(rho*H - H*rho) - lindblad;
 dydt = reshape(transpose(ddt_rho),4,1); % Convert (2,2) back to (1,4)
 
 end
-
-
-
