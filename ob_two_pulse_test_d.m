@@ -28,7 +28,7 @@ p.duration = 2*pulse_duration; % [µs] duration to be solved
 %% Plots
 
 % plot density matrix elements vs time
-fig_1 = figure; plot(t/pi,rho.*conj(rho)); axis([t(1)/pi t(end)/pi -0.1 1.1]);
+fig_1 = figure; plot(t/pi,rho); axis([t(1)/pi t(end)/pi -0.1 1.1]);
 xlabel('t (\pi µs)'), ylabel('|c|^2'), title(mfilename, 'interpreter', 'none');
 
 csvwrite(['csv/' mfilename '_pop.csv'],[t rho(:,1) rho(:,4)]);
