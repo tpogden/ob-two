@@ -8,20 +8,15 @@ function [dydt] = ob_two(t,y,p)
 %           
 % Out:      dydt            num(1,4)   ODE solution vector
 %
-% Author:   T P Ogden <t.p.ogden@durham.ac.uk>
-%
 % Notes:    Models OB equations for two-level ladder system, with functions
 %           of time for Rabi frequency and detuning. See ob_two_pulse and 
 %           ob_two_scan for examples of use. 
 %
-%           -- |2>
-%           |
+%           -- |2>                      rho = [ rho_11 rho_12 ]
+%           |                                 [ rho_21 rho_22 ] 
 %           | Omega_21
 %           |
 %           -- |1>
-%           
-%           rho = [ rho_11 rho_12 ]
-%                 [ rho_21 rho_22 ] 
 
 %% Density matrix and Hamiltonian
 
@@ -36,8 +31,7 @@ H = [       0    Omega_21;
 
 %% Decoherence 
 
-% decoherence due to spontaneous emission + Lorenzian laser linewidth 
-Gamma_21 = p.Gamma_2/2 + p.gamma_21;
+Gamma_21 = p.Gamma_2/2 + p.gamma_21; % decoherence due to spontaneous emission, Lorenzian linewidth 
 
 % Lindblad operator
 lindblad = zeros(2,2);

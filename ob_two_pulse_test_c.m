@@ -1,25 +1,25 @@
-% Test of:  ob_two_pulse.m
-%
-% Author:   T P Ogden <t.p.ogden@durham.ac.uk>
-%
-% Notes:    8pi pulse, no detuning, decay
+% ob_two_pulse_test_c
+% Tests:    4pi pulse, no detuning, decay
 
-%% System parameters
+clear;
 
-clear all;
+%% Parameters
 
-p.Gamma_2 =  2.5;  % Decay rate for Rb87 [2pi MHz]
-p.Omega_21 = 10; % Rabi frequency [2pi MHz]
-p.Delta_21 = 0; % Detuning [2pi MHz]
+Omega_21 = 10; % Rabi frequency [2pi MHz]
+Delta_21 = 0; % Detuning [2pi MHz]
 
-pulse_in_pi = 12; % e.g. 1 for pi-pulse, 1/2 for pi/2-pulse.
-p.pulse_duration = pulse_in_pi/p.Omega_21/2; % [탎]
+pulse_in_pi = 4; % [] e.g. 1 for pi-pulse, 1/2 for pi/2-pulse.
+pulse_duration = pulse_in_pi*pi/Omega_21; % [탎]
 
-p.init_pop = [1;0]; % initial populations of the states
+p.Omega_21_f = @(t) Omega_21*(t <= pulse_duration); % Rabi frequency, square pulse
+p.Delta_21_f = @(t) Delta_21; % detuning, constant
 
-p.duration = 1*p.pulse_duration; % [탎] duration to be solved
-
+p.Gamma_2 =  2;  % Decay rate for Rb87 [2pi MHz]
 p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
+
+p.init_pop = [1;0;0;0]; % initial populations of the states
+
+p.duration = 2*pulse_duration; % [탎] duration to be solved
 
 %% Solve for pulse
 
@@ -27,7 +27,9 @@ p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
             
 %% Plotting
 
-plot_population_time(t,rho); % plot population of states 1,2 vs time
+% plot density matrix elements vs time
+fig_1 = figure; plot(t/pi,rho.*conj(rho)); axis([t(1)/pi t(end)/pi -0.1 1.1]);
+xlabel('t (\pi 탎)'), ylabel('|c|^2'), title(mfilename, 'interpreter', 'none');
 
 % Plot real, imag of susceptibility, i.e. the absorption and dispersion vs time
 d_eg = 2.534e-29; %  [Cm] transition dipole moment 
