@@ -41,7 +41,7 @@ p.gamma_21 = p_in.gamma_21/p_in.Gamma_2; % [dimless] Lorenzian laser linewidth
 
 % The Rabi frequency is passed in as a function of time. In this case it is
 % a square pulse of duration specified by p.pulse_duration
-p.Omega_21_f = @(t) omega_pulse(t,p.Omega_21,p.pulse_duration);
+p.Omega_21_f = @(t) p.Omega_21*(t <= p.pulse_duration);
 
 % The detuning is passed in as a function of time. In this case it is a scan
 % function across the range defined by p.scan_min, p.scan_max and p.pulse_duration.

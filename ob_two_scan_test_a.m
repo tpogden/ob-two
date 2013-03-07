@@ -1,7 +1,5 @@
 % Test of: ob_two_scan.m
 %
-% Author:   T P Ogden <t.p.ogden@durham.ac.uk>
-%
 % Notes:    Solving the OB equations with constant Rabi frequency
 %           and a scan across the detuning. Uses the Rb87 D2 line
 %           natural linewidth. This test is to see if, using the 

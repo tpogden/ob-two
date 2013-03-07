@@ -14,15 +14,10 @@ function [t,rho] = ob_two_pulse(p_in)
 %
 % Notes:    See ob_two_test_[a-d].m for examples of use.
                 
-%% Rabi frequency and detuning as functions of time
+%% Parameters
 
-%p.Omega_21_f = @(t) p_in.Omega_21*(t <= p_in.pulse_duration); % Rabi frequency, square pulse
-%p.Delta_21_f = @(t) p_in.Delta_21; % detuning, constant
-
-p.Omega_21_f = p_in.Omega_21_f;
-p.Delta_21_f = p_in.Delta_21_f;
-
-%% Spontaneous emission and laser linewidth             
+p.Omega_21_f = p_in.Omega_21_f; % Rabi frequency function
+p.Delta_21_f = p_in.Delta_21_f; % Detuning function  
 
 p.Gamma_2 = p_in.Gamma_2; % Decay due to spontaneous emission
 p.gamma_21 = p_in.gamma_21; % Lorenzian laser linewidth
