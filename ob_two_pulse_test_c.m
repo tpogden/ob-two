@@ -27,9 +27,12 @@ p.duration = 2*pulse_duration; % [µs] duration to be solved
             
 %% Plotting
 
-% plot density matrix elements vs time
-fig_1 = figure; plot(t/pi,rho.*conj(rho)); axis([t(1)/pi t(end)/pi -0.1 1.1]);
-xlabel('t (\pi µs)'), ylabel('|c|^2'), title(mfilename, 'interpreter', 'none');
+% Plot populations vs time
+fig_1 = figure; plot(t/pi,[rho(:,1) rho(:,4)]); axis([t(1)/pi t(end)/pi -0.1 1.1]);
+xlabel('t (\pi µs)'), ylabel('|c|^2'), title([mfilename ': populations'], 'interpreter', 'none');
+legend('\rho_{11}', '\rho_{22}');
+
+csvwrite(['csv/' mfilename '_pop.csv'],[t rho(:,1) rho(:,4)]);
 
 % Plot real, imag of susceptibility, i.e. the absorption and dispersion vs time
 d_eg = 2.534e-29; %  [Cm] transition dipole moment 

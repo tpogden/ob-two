@@ -5,7 +5,7 @@ clear;
 
 %% Parameters
 
-Omega_21 = 10; % Rabi frequency [2pi MHz]
+Omega_21 = 1; % Rabi frequency [2pi MHz]
 Delta_21 = 0; % Detuning [2pi MHz]
 
 pulse_in_pi = 4; % [] e.g. 1 for pi-pulse, 1/2 for pi/2-pulse.
@@ -27,13 +27,16 @@ p.duration = 2*pulse_duration; % [µs] duration to be solved
             
 %% Plotting
 
-% plot density matrix elements vs time
-fig_1 = figure; plot(t/pi,rho.*conj(rho)); axis([t(1)/pi t(end)/pi -0.1 1.1]);
-xlabel('t (\pi µs)'), ylabel('|c|^2'), title(mfilename, 'interpreter', 'none');
+% Plot populations vs time
+fig_1 = figure; plot(t/pi,[rho(:,1) rho(:,4)]); axis([t(1)/pi t(end)/pi -0.1 1.1]);
+xlabel('t (\pi µs)'), ylabel('|c|^2'), title([mfilename ': populations'], 'interpreter', 'none');
+legend('\rho_{11}', '\rho_{22}');
+
+csvwrite(['csv/' mfilename '_pop.csv'],[t rho(:,1) rho(:,4)]);
 
 % Plot real, imag of susceptibility, i.e. the absorption and dispersion vs time
 d_eg = 2.534e-29; %  [Cm] transition dipole moment 
 n = 1e20; % [/m3] atomic number density N/V
 plot_susceptibility_time(t,rho,d_eg,n);
 
-plot_bloch_sphere(t,rho); % Plot the evolution over the Bloch sphere
+%plot_bloch_sphere(t,rho); % Plot the evolution over the Bloch sphere
