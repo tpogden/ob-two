@@ -12,8 +12,8 @@ function [dydt] = ob_two(t,y,p_in)
 %           of time for Rabi frequency and detuning. See ob_two_pulse and 
 %           ob_two_scan for examples of use. 
 %
-%           -- |2>                      rho = [ rho_11 rho_12 ]
-%           |                                 [ rho_21 rho_22 ] 
+%           -- |2>
+%           |                            
 %           | Omega_21
 %           |
 %           -- |1>

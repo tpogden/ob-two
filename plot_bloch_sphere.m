@@ -29,6 +29,6 @@ grid off
 hold on
 plot3(real(u),real(v),real(w),'r','LineWidth',2)
 
-print('-painters','-dpdf','-r300','pdf/plotted_bloch_sphere.pdf')
+%print('-painters','-dpdf','-r300','pdf/plotted_bloch_sphere.pdf')
 
 end

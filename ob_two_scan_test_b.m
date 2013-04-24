@@ -1,45 +1,41 @@
-% Test of: ob_two_scan.m
-%
-% Notes:    Solving the OB equations with constant Rabi frequency
-%           and a scan across the detuning. Uses the Rb87 D2 line
-%           natural linewidth. This test is to see if, using the 
-%           same parameters, we can match that of a model by Jon Pritchard. 
-%           See http://massey.dur.ac.uk/jdp/code.html#obe1
-%
-%           Rb87 D2 line: 5S_1/2 |F=2, m_F=2> to 5P_3/2 |F'=3, m_F'=3>
+% ob_two_scan_test_b
 
 %% Test system parameters 
 
-clear all;
+clear;
 
-p.Gamma_2 = 6.0666;  % natural linewidth of spontaneous decay for Rb87 [2pi MHz]
+p.Gamma_2 = 1;  % natural linewidth of spontaneous decay for Rb87 [2pi MHz]
 p.Omega_21 = 0.1;  % Rabi frequency [2pi MHz]
 
 % detuning scan parameters
-p.scan_min = -20;           % scan range [2pi MHz]
-p.scan_max = 20;
-p.scan_duration = 500;        % scan duration [탎]
+p.Delta_21_min = -5;           % scan range [2pi MHz]
+p.Delta_21_max = 5;
+p.pulse_21_duration = 10000;        % scan duration [탎]
 
-% initial populations of the states. Here we start with all population in the 
-% ground state.
-p.init_pop = [1;0];
+p.init_pop = [1;0]; % Start with all population in the ground state.
 
 p.gamma_21 = 0; % [2pi MHz] Lorenzian laser linewidth
+
+p.duration = p.pulse_21_duration; % [탎] duration to be solved
 
 %% Scan and solve
 
 [t,rho] = ob_two_scan(p);
 
-% Create the detuning vector for plots.
-Delta_21 = delta_scan(t,p.scan_min,p.scan_max,p.scan_duration);
-
 %% Plots
 
-plot_population_detuning(Delta_21,rho);
+% Create the detuning vector for plots.
+Delta_21 = p.Delta_21_min ... 
+                + (t./p.pulse_21_duration)*(p.Delta_21_max-p.Delta_21_min); % [MHz]
 
-d_eg = 2.534e-29; %  transition dipole moment [C m]
-n = 1e20; % [/m3] atomic number density (N/V)
+% Plot excited state population vs detuning
+fig_1 = figure; plot(Delta_21,[rho(:,4)]); axis([Delta_21(1) Delta_21(end) 0 1e-2]);
+xlabel('t (\pi 탎)'), ylabel('|c|^2');
+title([mfilename ': excited population'], 'interpreter', 'none'); legend('\rho_{22}');
 
-plot_susceptibility_detuning(Delta_21,rho,d_eg,n);
+% Plot susceptibility vs detuning
+z = abs(Delta_21); [j] = find(min(z)==z); Chi_0 = rho(j,2); % Find Chi at Delta = 0
 
-plot_bloch_sphere(t,rho);
+fig_2 = figure; plot(Delta_21,[imag(rho(:,2))/imag(Chi_0) real(rho(:,2))/imag(Chi_0)]);
+axis([Delta_21(1) Delta_21(end) -1.1 1.1]); title('normalised absorption \chi_I');
+xlabel('\Delta (MHz)'), ylabel(''); legend('\chi_{R}', '\chi_{I}');

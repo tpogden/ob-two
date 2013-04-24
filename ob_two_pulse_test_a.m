@@ -1,5 +1,5 @@
 % ob_two_pulse_test_a
-% Tests:    4pi pulse, no detuning, no decay
+% Tests:    2pi pulse, no detuning, no decay
 
 clear;
 
@@ -14,9 +14,11 @@ p.pulse_duration = pulse_in_pi*pi/p.Omega_21; % [µs]
 p.Gamma_1 = 0; % [2pi MHz]
 p.Gamma_2 = 0; % Decay rate for Rb87 [2pi MHz]
 
+p.gamma_21 = 0; % [2pi MHz]
+
 p.init_pop = [1;0;0;0]; % initial populations of the states
 
-p.duration = 2*pulse_duration; % [µs] duration to be solved
+p.duration = 2*p.pulse_duration; % [µs] duration to be solved
 
 %% Solve for pulse
 
@@ -31,9 +33,4 @@ legend('\rho_{11}', '\rho_{22}');
 
 csvwrite(['csv/' mfilename '_pop.csv'],[t rho(:,1) rho(:,4)]);
 
-% Plot real, imag of susceptibility, i.e. the absorption and dispersion vs time
-%d_eg = 1; %  [Cm] transition dipole moment 
-%n = 1; % [/m3] atomic number density N/V
-%plot_susceptibility_time(t,rho,d_eg,n);
-
-%plot_bloch_sphere(t,rho); % Plot the evolution over the Bloch sphere
+plot_bloch_sphere(t,rho); % Plot the evolution over the Bloch sphere

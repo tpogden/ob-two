@@ -19,36 +19,27 @@ function [t,rho] = ob_two_scan(p_in)
                     
 %% Convert parameters to dimensionless units
 
-% Natural linewidth due to spontaneous emmision. We're scaling in terms of
-% this so make it equal unity.
-p.Gamma_2 = 1; 
+% Rabi frequency [2pi MHz]
+p.Omega_21 = p_in.Omega_21;
 
-% Rabi frequency [dimensionless] ([2pi MHz]/Gamma_2[2pi MHz])
-p.Omega_21 = p_in.Omega_21/p_in.Gamma_2;  
+% Pulse duration [탎])
+p.pulse_21_duration = p_in.pulse_21_duration; % Scan duration 
 
-%Scan Parameters [dimensionless] ([2pi MHz]/Gamma_2[2pi MHz])
-p.scan_min = p_in.scan_min/p_in.Gamma_2;
-p.scan_max = p_in.scan_max/p_in.Gamma_2;
+p.Gamma_2 = p_in.Gamma_2;
 
-decay_lifetime = 1/(2*pi*p_in.Gamma_2); % [탎] 
-
-% Pulse duration (dimensionless [탎]/decay_lifetime[탎])
-p.pulse_duration = p_in.scan_duration/decay_lifetime; % Scan duration 
-
-p.gamma_21 = p_in.gamma_21/p_in.Gamma_2; % [dimless] Lorenzian laser linewidth
+p.gamma_21 = p_in.gamma_21; % [2pi MHz] Lorenzian laser linewidth
 
 %% Rabi frequency and detuning functions
 
-% The Rabi frequency is passed in as a function of time. In this case it is
-% a square pulse of duration specified by p.pulse_duration
-p.Omega_21_f = @(t) p.Omega_21*(t <= p.pulse_duration);
+% Rabi frequency as function of time, square pulse
+p.Omega_21_f = @(t) p.Omega_21*(t <= p.pulse_21_duration);
 
-% The detuning is passed in as a function of time. In this case it is a scan
-% function across the range defined by p.scan_min, p.scan_max and p.pulse_duration.
-p.Delta_21_f = @(t) delta_scan(t,p.scan_min,p.scan_max,p.pulse_duration);
+% Detuning as function of time, scan across the range defined by p.scan_min, p.scan_max
+p.Delta_21_f = @(t) p_in.Delta_21_min ... 
+                + (t./p_in.pulse_21_duration)*(p_in.Delta_21_max-p_in.Delta_21_min); % [MHz]
 
 %% Set time domain and initial conditions
-t_span = [0 p.pulse_duration]; % [탎]
+t_span = [0 p_in.duration]; % [탎]
 
 % The initial populations of the density matrix. The density matrix is
 % passed in as a vector.
@@ -62,7 +53,5 @@ options = odeset('RelTol',1e-5,'AbsTol',atol);
 tic 
 [t,rho] = ode23s(@(t,y) ob_two(t,y,p), t_span, init_cond, options); 
 toc
-
-t = t.*decay_lifetime; % [탎] Convert time back to SI
 
 end

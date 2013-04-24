@@ -10,7 +10,7 @@ Define functions for the Rabi frequency and detuning of the laser and the initia
 
 Two kinds of system are modelled: a square pulse through medium and a scan across the detuning.
 
-It will plot 
+It will plot
 
 - The populations and relative absorption and dispersion vs time (for a pulse) or detuning (for a scan)
 - Relative absorption and dispersion vs time (for a pulse) or detuning (for a scan)

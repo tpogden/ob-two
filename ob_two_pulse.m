@@ -5,7 +5,8 @@ function [t,rho] = ob_two_pulse(p_in)
 % In:       p_in.init_pop       num(2,1)    init population of the two states
 %           p_in.Omega_21       num         Rabi frequency coupling states
 %           p_in.Delta_21       num         detuning
-%           p_in.Gamma_2        num         natural linewidth of spontaneous 
+%           p_in.gamma_21       num         laser linewidth
+%           p_in.Gamma_2        num         natural linewidth of spontaneous
 %           p_in.pulse_duration num         Duration of the pulse
 %           p_in.duration       num         Duration of the solution
 %           
