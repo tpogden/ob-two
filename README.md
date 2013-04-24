@@ -8,11 +8,11 @@ This Matlab code solves the Optical Bloch equations for light interacting with a
 
 Define functions for the Rabi frequency and detuning of the laser and the initial populations of the atomic levels and the code will solve the system with a Runge-Kutta method.
 
-Two kinds of system are modelled: a square pulse through medium and a scan across the detuning.
+Three kinds of system are modelled: a square pulse through medium, a scan across the detuning and a Ramsey-type double pulse.
 
 It will plot
 
-- The populations and relative absorption and dispersion vs time (for a pulse) or detuning (for a scan)
+- The populations vs time (for a pulse) or detuning (for a scan)
 - Relative absorption and dispersion vs time (for a pulse) or detuning (for a scan)
 - Bloch sphere trajectories
 
@@ -20,7 +20,7 @@ It saves the data in CSV files in the folder `ob-two/csv`.
 
 ## How do I use it?
 
-Open `ob-two` in Matlab and run a test, e.g.
+Go to `ob-two` in Matlab and run a test, e.g.
 
     >> ob_two_pulse_test_a  
 
@@ -28,16 +28,21 @@ Open `ob-two` in Matlab and run a test, e.g.
 
 These example tests are included:
 
-- Pulse Test A:
-- Pulse Test B:
-- Pulse Test C:
-- Pulse Test D:
+- Pulse Test A: 2π pulse
+- Pulse Test B: 2π pulse with detuning
+- Pulse Test C: 4π pulse with decay
+- Pulse Test D: 4π pulse with detuning and decay
+- Pulse Test E: ½π pulse
 
-- Scan Test A:
-- Scan Test B:
+- Ramsey Test A: A Ramsey-type double pulse
+
+- Scan Test A: A scan with parameters for the Rb87 D2 line
+- Scan Test B: A scan with example parameters
 
 You can make your own tests by copying an existing one and changing the _Parameters_ section.
 
 ## Notes
 
-The Optical Bloch equations are described in my first year PhD report 'Atom Light Interactions in a Blockaded Medium'. For derivation of the equations see Atomic Physics, Foot.
+The Optical Bloch equations are described in my report ['Atom Light Interactions in a Rydberg Blockaded Medium'][1]. For derivation of the equations see for example §7 of Atomic Physics by CJ Foot.
+
+[1] https://dl.dropbox.com/u/349151/2012-06-15_first_year_report_v1.pdf
