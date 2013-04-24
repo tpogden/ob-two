@@ -18,7 +18,7 @@ p.Omega_21 = 0.1;  % Rabi frequency [2pi MHz]
 % detuning scan parameters
 p.scan_min = -20;           % scan range [2pi MHz]
 p.scan_max = 20;
-p.scan_duration = 500;        % scan duration [1e-6 s]
+p.scan_duration = 500;        % scan duration [µs]
 
 % initial populations of the states. Here we start with all population in the 
 % ground state.

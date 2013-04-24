@@ -1,4 +1,4 @@
-function [dydt] = ob_two(t,y,p)
+function [dydt] = ob_two(t,y,p_in)
 % OB_TWO    Optical Bloch equations for a two-level ladder system in the rotating wave approx.  
 %
 % In:       t               num         time
@@ -22,23 +22,24 @@ function [dydt] = ob_two(t,y,p)
 
 rho = transpose(reshape(y,2,2)); % Density matrix, convert (1,4) to (2,2)
 
-Omega_21 = p.Omega_21_f(t); % Rabi Frequency (function of time)
+Omega_21 = p_in.Omega_21_f(t); % Rabi Frequency (function of time)
 
-Delta_21 = p.Delta_21_f(t); % Detuning function (function of time)
+Delta_21 = p_in.Delta_21_f(t); % Detuning function (function of time)
 
 H = [       0    Omega_21; 
      Omega_21 -2*Delta_21]/2; % Hamiltonian
 
 %% Decoherence 
 
-Gamma_21 = p.Gamma_2/2 + p.gamma_21; % decoherence due to spontaneous emission, Lorenzian linewidth 
+% decoherence due to spontaneous emission + Lorenzian laser linewidth 
+Gamma_21 = p_in.Gamma_2/2 + p_in.gamma_21;
 
 % Lindblad operator
 lindblad = zeros(2,2);
-lindblad(1,1) = -p.Gamma_2*rho(2,2);
+lindblad(1,1) = -p_in.Gamma_2*rho(2,2);
 lindblad(1,2) = Gamma_21*rho(1,2);
 lindblad(2,1) = Gamma_21*rho(2,1);
-lindblad(2,2) = p.Gamma_2*rho(2,2);
+lindblad(2,2) = p_in.Gamma_2*rho(2,2);
      
 %% Liouville equation
 ddt_rho = 1i*(rho*H - H*rho) - lindblad;
