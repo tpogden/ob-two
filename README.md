@@ -33,9 +33,7 @@ These example tests are included:
 - Pulse Test C: 4π pulse with decay
 - Pulse Test D: 4π pulse with detuning and decay
 - Pulse Test E: ½π pulse
-
 - Ramsey Test A: A Ramsey-type double pulse
-
 - Scan Test A: A scan with parameters for the Rb87 D2 line
 - Scan Test B: A scan with example parameters
 
@@ -43,6 +41,6 @@ You can make your own tests by copying an existing one and changing the _Paramet
 
 ## Notes
 
-The Optical Bloch equations are described in my report ['Atom Light Interactions in a Rydberg Blockaded Medium'][1]. For derivation of the equations see for example §7 of Atomic Physics by CJ Foot.
+The Optical Bloch equations are described in my report [Atom Light Interactions in a Rydberg Blockaded Medium](https://dl.dropbox.com/u/349151/2012-06-15_first_year_report_v1.pdf). For derivation of the equations see for example §7 of Atomic Physics by CJ Foot.
 
-[1] https://dl.dropbox.com/u/349151/2012-06-15_first_year_report_v1.pdf
+[1] 
